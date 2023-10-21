@@ -1,0 +1,1390 @@
+
+<xs:schema targetNamespace="http://ns.adobe.com/xfdf/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0" xmlns="http://ns.adobe.com/xfdf/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd">
+
+		<xs:annotation>
+
+			<xs:documentation>Allows access to the xml: attribute groups, specifically xml:space.</xs:documentation>
+
+		</xs:annotation>
+
+	</xs:import>
+
+	<xs:annotation>
+
+		<xs:documentation>			
+
+			Types for attributes.		
+
+		</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:simpleType name="annot-flags.type">
+
+		<xs:annotation>
+
+			<xs:documentation>	List of flags separated by commas.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string">
+
+			<xs:pattern value="(invisible,|hidden,|print,|nozoom,|norotate,|noview,|readonly,|locked,|togglenoview,)*(invisible|hidden|print|nozoom|norotate|noview|readonly|locked|togglenoview)"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="rect.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Four comma separated real numbers. May be positive or negative XSLT: format-number(@VAL,'0.000000')</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="pdf-date.type">
+
+		<xs:annotation>
+
+			<xs:documentation>PDF date format: D:YYYYMMDDHHmmSSOHH'mm', where O is +, -, or Z. Z is not followed by HH'mm'. The date may be truncated between units; for example D:2000 is valid, but D:01 is not.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string">
+
+			<xs:pattern value="D:\d{4,4}((0[1-9]|1[0-2])((0[1-9]|[1-2]\d|3[0-1])(([0-1]\d|2[0-3])(([0-5]\d)(([0-5]\d)(Z|([\+\-]([0-1]\d'|2[0-3]')([0-5]\d')?)?)?)?)?)?)?)?"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="color.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:pattern value="#[A-Fa-f0-9]{6,6}"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="caret-symbol.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="none"/>
+
+			<xs:enumeration value="paragraph"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="filter.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:pattern value="(ASCIIHexDecode,|ASCII85Decode,|LZWDecode,|FlateDecode,|RunLengthDecode,|CCITTFaxDecode,|JBIG2Decode,|DCTDecode,|JPXDecode,|Crypt)*(ASCIIHexDecode|ASCII85Decode|LZWDecode|FlateDecode|RunLengthDecode|CCITTFaxDecode|JBIG2Decode|DCTDecode|JPXDecode|Crypt)"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="real-point.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="gesture.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="coords.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="style.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="solid"/>
+
+			<xs:enumeration value="dash"/>
+
+			<xs:enumeration value="bevelled"/>
+
+			<xs:enumeration value="inset"/>
+
+			<xs:enumeration value="underline"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="style_BE.type">
+
+		<xs:annotation>
+
+			<xs:documentation>style.type plus cloudy.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="solid"/>
+
+			<xs:enumeration value="dash"/>
+
+			<xs:enumeration value="bevelled"/>
+
+			<xs:enumeration value="inset"/>
+
+			<xs:enumeration value="underline"/>
+
+			<xs:enumeration value="cloudy"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="yes-no.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="yes"/>
+
+			<xs:enumeration value="no"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="sound-encoding.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="raw"/>
+
+			<xs:enumeration value="signed"/>
+
+			<xs:enumeration value="mulaw"/>
+
+			<xs:enumeration value="alaw"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="file-specification.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="fileattachment-icon.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Graph"/>
+
+			<xs:enumeration value="Paperclip"/>
+
+			<xs:enumeration value="PushPin"/>
+
+			<xs:enumeration value="Tag"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="mode.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="filtered"/>
+
+			<xs:enumeration value="raw"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="sound-icon.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Speaker"/>
+
+			<xs:enumeration value="Mic"/>
+
+			<xs:enumeration value="Ear"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="stamp-icon.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="SBRejected"/>
+
+			<xs:enumeration value="SHAccepted"/>
+
+			<xs:enumeration value="SHInitialHere"/>
+
+			<xs:enumeration value="SHWitness"/>
+
+			<xs:enumeration value="SHSignHere"/>
+
+			<xs:enumeration value="SBApproved"/>
+
+			<xs:enumeration value="SBCompleted"/>
+
+			<xs:enumeration value="SBConfidential"/>
+
+			<xs:enumeration value="SBDraft"/>
+
+			<xs:enumeration value="SBFinal"/>
+
+			<xs:enumeration value="SBForComment"/>
+
+			<xs:enumeration value="SBForPublicRelease"/>
+
+			<xs:enumeration value="SBInformationOnly"/>
+
+			<xs:enumeration value="SBNotApproved"/>
+
+			<xs:enumeration value="SBNotForPublicRelease"/>
+
+			<xs:enumeration value="SBPreliminaryResults"/>
+
+			<xs:enumeration value="SBVoid"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>	
+
+	<xs:simpleType name="stamp-icon1.4.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Approved"/>
+
+			<xs:enumeration value="AsIs"/>
+
+			<xs:enumeration value="Confidential"/>
+
+			<xs:enumeration value="Departmental"/>
+
+			<xs:enumeration value="Draft"/>
+
+			<xs:enumeration value="Experimental"/>
+
+			<xs:enumeration value="Expired"/>
+
+			<xs:enumeration value="Final"/>
+
+			<xs:enumeration value="ForComment"/>
+
+			<xs:enumeration value="ForPublicRelease"/>
+
+			<xs:enumeration value="NotApproved"/>
+
+			<xs:enumeration value="NotForPublicRelease"/>
+
+			<xs:enumeration value="Sold"/>
+
+			<xs:enumeration value="TopSecret"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="text-icon.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Comment"/>
+
+			<xs:enumeration value="Check"/>
+
+			<xs:enumeration value="Circle"/>
+
+			<xs:enumeration value="Cross"/>
+
+			<xs:enumeration value="Help"/>
+
+			<xs:enumeration value="Insert"/>
+
+			<xs:enumeration value="Key"/>
+
+			<xs:enumeration value="NewParagraph"/>
+
+			<xs:enumeration value="Note"/>
+
+			<xs:enumeration value="Paragraph"/>
+
+			<xs:enumeration value="RightArrow"/>
+
+			<xs:enumeration value="RightPointer"/>
+
+			<xs:enumeration value="Star"/>
+
+			<xs:enumeration value="UpArrow"/>
+
+			<xs:enumeration value="UpLeftArrow"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="vertices.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="line-end.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Square"/>
+
+			<xs:enumeration value="Circle"/>
+
+			<xs:enumeration value="Diamond"/>
+
+			<xs:enumeration value="OpenArrow"/>
+
+			<xs:enumeration value="ClosedArrow"/>
+
+			<xs:enumeration value="None"/>
+
+			<xs:enumeration value="Butt"/>
+
+			<xs:enumeration value="ROpenArrow"/>
+
+			<xs:enumeration value="RClosedArrow"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="dash-array.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="justification.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="left"/>
+
+			<xs:enumeration value="centered"/>
+
+			<xs:enumeration value="right"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="statemodel.type">
+
+		<xs:restriction base="xs:NMTOKEN">
+
+			<xs:enumeration value="Marked"/>
+
+			<xs:enumeration value="Review"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="state.type">
+
+		<xs:restriction base="xs:string">
+
+			<xs:enumeration value="Marked"/>
+
+			<xs:enumeration value="Unmarked"/>
+
+			<xs:enumeration value="Accepted"/>
+
+			<xs:enumeration value="Rejected"/>
+
+			<xs:enumeration value="Cancelled"/>
+
+			<xs:enumeration value="Completed"/>
+
+			<xs:enumeration value="None"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="rotation-angle.type">
+
+		<xs:restriction base="xs:integer"/>
+
+	</xs:simpleType>
+
+	<xs:annotation>
+
+		<xs:documentation>Form Field Types</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:simpleType name="field-name.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Field names may not contain periods.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string">
+
+			<xs:pattern value="[^.]+"/>
+
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<xs:annotation>
+
+		<xs:documentation>The root element xfdf.</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:element name="xfdf">
+
+		<xs:complexType>
+
+			<xs:all>
+
+				<xs:annotation>
+
+					<xs:documentation>The content model is: ( f? &amp; ids &amp; fields? &amp; annots? )</xs:documentation>
+
+				</xs:annotation>
+
+				<xs:element name="f" type="f.elem.type" minOccurs="0"/>
+
+				<xs:element name="ids" type="ids.elem.type" minOccurs="0"/>
+
+				<xs:element name="annots" type="annots.elem.type" minOccurs="0"/>
+
+				<xs:element name="fields" type="fields.elem.type" minOccurs="0"/>
+
+			</xs:all>
+
+			<!-- xml:space value must be preserve -->
+
+			<xs:attribute ref="xml:space" use="required"/>
+
+		</xs:complexType>
+
+	</xs:element>
+
+	<xs:complexType name="f.elem.type">
+
+		<xs:attribute name="href" type="xs:anyURI" use="required"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="ids.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>File trailer ID key. The attribute values are hexadecimal numbers. When filled in by Acrobat, these are MD5 signature values.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:attribute name="original" type="xs:hexBinary" use="required"/>
+
+		<xs:attribute name="modified" type="xs:hexBinary" use="required"/>
+
+	</xs:complexType>
+
+	<xs:annotation>
+
+		<xs:documentation>Annotation Element definitions.</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:complexType name="annots.elem.type">
+
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+
+			<xs:element name="text" type="text.elem.type"/>
+
+			<xs:element name="caret" type="caret.elem.type"/>
+
+			<xs:element name="freetext" type="freetext.elem.type"/>
+
+			<xs:element name="fileattachment" type="fileattachment.elem.type"/>
+
+			<xs:element name="highlight" type="highlight.elem.type"/>
+
+			<xs:element name="ink" type="ink.elem.type"/>
+
+			<xs:element name="line" type="line.elem.type"/>
+
+			<xs:element name="square" type="square.elem.type"/>
+
+			<xs:element name="circle" type="circle.elem.type"/>
+
+			<xs:element name="polygon" type="polygon.elem.type"/>
+
+			<xs:element name="polyline" type="polyline.elem.type"/>
+
+			<xs:element name="sound" type="sound.elem.type"/>
+
+			<xs:element name="squiggly" type="underline.elem.type"/>
+
+			<xs:element name="stamp" type="stamp.elem.type"/>
+
+			<xs:element name="strikeout" type="strikeout.elem.type"/>
+
+			<xs:element name="underline" type="underline.elem.type"/>
+
+		</xs:choice>
+
+	</xs:complexType>
+
+	<xs:complexType name="caret.elem.type">
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="defaultappearance" type="defaultappearance.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="fringe" type="rect.type" use="optional"/>
+
+		<xs:attribute name="symbol" default="none">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="caret-symbol.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+	</xs:complexType>
+
+	<xs:complexType name="fileattachment.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>FileAttachment annotation</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="data" type="data.elem.type"/>
+
+			<xs:element name="resource" type="resource.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="icon" default="PushPin">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="fileattachment-icon.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+		<xs:attribute name="file" type="file-specification.type" use="required"/>
+
+		<xs:attribute name="mimetype" type="xs:string" use="optional"/>
+
+		<xs:attribute name="size" type="xs:int" use="optional"/>
+
+		<xs:attribute name="modification" type="pdf-date.type" use="optional"/>
+
+		<xs:attribute name="creation" type="pdf-date.type" use="optional"/>
+
+		<xs:attribute name="checksum" type="xs:hexBinary" use="optional"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="freetext.elem.type">
+
+		<xs:all>
+
+			<xs:element name="defaultstyle" type="defaultstyle.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="defaultappearance" type="defaultappearance.elem.type"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attributeGroup ref="BS.attgroup"/>
+
+		<xs:attribute name="rotation" type="rotation-angle.type" use="optional"/>
+
+		<xs:attribute name="justification" type="justification.type" use="optional"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="highlight.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>The Highlight annotation is a Text Markup Annotation.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="coords" type="coords.type" use="required"/>
+
+		<!-- QuadPoints Key is coords and is required -->
+
+	</xs:complexType>
+
+	<xs:complexType name="ink.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Ink annotation</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="inklist" type="inklist.elem.type"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attributeGroup ref="BS.attgroup"/>
+
+		<!-- seems to have only width -->
+
+	</xs:complexType>
+
+	<xs:complexType name="line.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Line annotation.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="start" type="real-point.type" use="required"/>
+
+		<xs:attribute name="end" type="real-point.type" use="required"/>
+
+		<xs:attribute name="head" type="line-end.type" default="None"/>
+
+		<xs:attribute name="tail" type="line-end.type" default="None"/>
+
+		<xs:attributeGroup ref="BS.attgroup"/>
+
+		<xs:attribute name="interior-color" type="color.type"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="circle.elem.type">
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attributeGroup ref="BS_BE.attgroup"/>
+
+		<xs:attribute name="fringe" type="rect.type" use="optional"/>
+
+		<xs:attribute name="interior-color" type="color.type" default="#000000"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="square.elem.type">
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attributeGroup ref="BS_BE.attgroup"/>
+
+		<xs:attribute name="fringe" type="rect.type" use="optional"/>
+
+		<xs:attribute name="interior-color" type="color.type" default="#000000"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="polygon.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Polygon annotation</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="vertices" type="vertices.elem.type"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="interior-color" type="color.type" default="#000000"/>
+
+		<xs:attributeGroup ref="BS_BE.attgroup"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="polyline.elem.type">
+
+		<xs:all>
+
+			<xs:element name="vertices" type="vertices.elem.type"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="interior-color" type="color.type" default="#000000"/>
+
+		<xs:attributeGroup ref="BS.attgroup"/>
+
+		<xs:attribute name="head" type="line-end.type"/>
+
+		<xs:attribute name="tail" type="line-end.type"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="sound.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Sound Clip annotation</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="data" type="data.elem.type"/>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="icon" default="Speaker">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="sound-icon.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+		<xs:attribute name="rate" type="xs:decimal" use="required"/>
+
+		<xs:attribute name="bits" type="xs:int" default="8"/>
+
+		<xs:attribute name="channels" type="xs:integer" default="1"/>
+
+		<xs:attribute name="encoding" type="sound-encoding.type" default="raw"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="stamp.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Rubber Stamp annotation</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="appearance" type="appearance.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="rotation" type="rotation-angle.type" use="optional"/>
+
+		<xs:attribute name="icon" default="Draft">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="stamp-icon.type stamp-icon1.4.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+	</xs:complexType>
+
+	<xs:complexType name="strikeout.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Strikeout is a Text Markup Annotation.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="coords" type="coords.type" use="required"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="text.elem.type">
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="icon" default="Note">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="text-icon.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+		<xs:attribute name="inreplyto" type="xs:string"/>
+
+		<xs:attribute name="state">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="state.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+		<xs:attribute name="statemodel">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="statemodel.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+	</xs:complexType>
+
+	<xs:complexType name="underline.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Underline is a Text Markup annotation.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:all>
+
+			<xs:element name="contents-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+			<xs:element name="contents" type="contents.elem.type" minOccurs="0"/>
+
+			<xs:element name="popup" type="popup.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attributeGroup ref="annots-markup.attgroup"/>
+
+		<xs:attribute name="coords" type="coords.type" use="required"/>
+
+	</xs:complexType>
+
+	<xs:annotation>
+
+		<xs:documentation>Annotation helper elements.</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:simpleType name="appearance.elem.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="contents.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Corresponds to Markup annotation key Contents.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:complexType name="richtext.elem.type" mixed="true">
+
+		<xs:annotation>
+
+			<xs:documentation>Corresponds to Markup annotation key RC.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:sequence>
+
+			<xs:any namespace="http://www.w3.org/1999/xhtml" minOccurs="1" maxOccurs="unbounded" processContents="skip"/>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<xs:complexType name="data.elem.type">
+
+		<xs:simpleContent>
+
+			<xs:extension base="xs:string">
+
+				<xs:attribute name="mode" type="mode.type" use="required"/>
+
+				<xs:attribute name="encoding" use="required">
+
+					<xs:simpleType>
+
+						<xs:restriction base="xs:NMTOKEN">
+
+							<xs:enumeration value="ascii"/>
+
+							<xs:enumeration value="hex"/>
+
+						</xs:restriction>
+
+					</xs:simpleType>
+
+				</xs:attribute>
+
+				<xs:attribute name="length" type="xs:int" use="required"/>
+
+				<xs:attribute name="filter" use="required">
+
+					<xs:simpleType>
+
+						<xs:union memberTypes="filter.type xs:string"/>
+
+					</xs:simpleType>
+
+				</xs:attribute>
+
+			</xs:extension>
+
+		</xs:simpleContent>
+
+	</xs:complexType>
+
+	<xs:simpleType name="defaultappearance.elem.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="defaultstyle.elem.type">
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:simpleType name="gesture.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>
+
+				gesture contains the InkList data
+
+			</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="gesture.type"/>
+
+	</xs:simpleType>
+
+	<xs:complexType name="inklist.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>
+
+				InkList Key on an Ink annotation
+
+			</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:sequence>
+
+			<xs:element name="gesture" type="gesture.elem.type" maxOccurs="unbounded"/>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<xs:complexType name="popup.elem.type">
+
+		<xs:attributeGroup ref="annots-common.attgroup"/>
+
+		<xs:attribute name="open" type="yes-no.type" default="no"/>
+
+	</xs:complexType>
+
+	<xs:complexType name="resource.elem.type">
+
+		<xs:simpleContent>
+
+			<xs:extension base="xs:string">
+
+				<xs:attribute name="mode" type="mode.type" use="required"/>
+
+				<xs:attribute name="encoding" use="required">
+
+					<xs:simpleType>
+
+						<xs:restriction base="xs:NMTOKEN">
+
+							<xs:enumeration value="ascii"/>
+
+							<xs:enumeration value="hex"/>
+
+						</xs:restriction>
+
+					</xs:simpleType>
+
+				</xs:attribute>
+
+				<xs:attribute name="length" type="xs:int" use="required"/>
+
+				<xs:attribute name="filter" use="required">
+
+					<xs:simpleType>
+
+						<xs:union memberTypes="filter.type xs:string"/>
+
+					</xs:simpleType>
+
+				</xs:attribute>
+
+				<xs:attribute name="creator" type="xs:string" use="optional"/>
+
+				<xs:attribute name="subtype" type="xs:string" use="optional"/>
+
+			</xs:extension>
+
+		</xs:simpleContent>
+
+	</xs:complexType>
+
+	<xs:simpleType name="vertices.elem.type">
+
+		<xs:restriction base="vertices.type"/>
+
+	</xs:simpleType>
+
+	<xs:annotation>
+
+		<xs:documentation>Form Field elements</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:complexType name="fields.elem.type">
+
+		<xs:sequence>
+
+			<xs:element name="field" type="field.elem.type" minOccurs="0" maxOccurs="unbounded"/>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<xs:group name="value.group.type">
+
+		<xs:all>
+
+			<xs:element name="value" type="value.elem.type" minOccurs="0"/>
+
+			<xs:element name="value-richtext" type="richtext.elem.type" minOccurs="0"/>
+
+		</xs:all>
+
+	</xs:group>
+
+	<xs:complexType name="field.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>field can contain either one or more field elements or a single value elements: (field* | (value? &amp; value-richtext?)</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:choice>
+
+			<xs:element name="field" type="field.elem.type" minOccurs="0" maxOccurs="unbounded"/>
+
+			<xs:group ref="value.group.type"/>
+
+		</xs:choice>
+
+		<xs:attribute name="name" type="field-name.type" use="required"/>
+
+	</xs:complexType>
+
+	<xs:simpleType name="value.elem.type">
+
+		<xs:annotation>
+
+			<xs:documentation>Contains the value of the field.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:restriction base="xs:string"/>
+
+	</xs:simpleType>
+
+	<xs:annotation>
+
+		<xs:documentation>Definition of common attributes.</xs:documentation>
+
+	</xs:annotation>
+
+	<xs:attributeGroup name="annots-common.attgroup">
+
+		<xs:annotation>
+
+			<xs:documentation>Attributes common to all annotations.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:attribute name="color" type="color.type" use="optional"/>
+
+		<xs:attribute name="date" use="optional">
+
+			<xs:simpleType>
+
+				<xs:union memberTypes="pdf-date.type xs:string"/>
+
+			</xs:simpleType>
+
+		</xs:attribute>
+
+		<xs:attribute name="flags" type="annot-flags.type" use="optional"/>
+
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+
+		<xs:attribute name="page" type="xs:nonNegativeInteger" use="required"/>
+
+		<xs:attribute name="rect" type="rect.type" use="required"/>
+
+		<xs:attribute name="title" type="xs:string" use="optional"/>
+
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="annots-markup.attgroup">
+
+		<xs:attribute name="creationdate" type="pdf-date.type" use="optional"/>
+
+		<xs:attribute name="opacity" type="xs:decimal" default="1.0"/>
+
+		<xs:attribute name="subject" type="xs:string" use="optional"/>
+
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="BS.attgroup">
+
+		<xs:annotation>
+
+			<xs:documentation>Border Style attributes.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:attribute name="width" type="xs:decimal" default="1"/>
+
+		<xs:attribute name="dashes" type="dash-array.type" use="optional"/>
+
+		<xs:attribute name="style" type="style.type" use="optional"/>
+
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="BS_BE.attgroup">
+
+		<xs:annotation>
+
+			<xs:documentation>Border Style plus Border Effect attributes.</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:attribute name="width" type="xs:decimal" default="1"/>
+
+		<xs:attribute name="dashes" type="dash-array.type" use="optional"/>
+
+		<xs:attribute name="style" type="style_BE.type" use="optional"/>
+
+		<xs:attribute name="intensity" type="xs:integer" use="optional"/>
+
+	</xs:attributeGroup>	
+
+</xs:schema>
